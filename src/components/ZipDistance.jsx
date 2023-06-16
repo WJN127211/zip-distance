@@ -7,21 +7,33 @@ const ZipDistance = ()=>{
     const[zipCode2,setzipCode2] = useState('');
     //const[cityData,setcityData]=useState('');
     const[cityDistance,setCityDistance]=useState('');
+    const[historyArray, setarray] = useState([]);
+    const[units, setUnits] = useState('mi');
 
    
         const handleSubmit=async(event)=>{
             event.preventDefault();
             try {
-                const response = await axios.get(`https://zip-api.eu/api/v1/distance/US-${zipCode}/US-${zipCode2}/mi`);
+                const response = await axios.get(`https://zip-api.eu/api/v1/distance/US-${zipCode}/US-${zipCode2}/${units}`);
                 console.log(response);
                 setCityDistance(response.data);
                 console.log(cityDistance);
+                setarray([...historyArray, response.data.distance + units]);
+                console.log(historyArray);
             } catch (error) {
                 console.log(error);
             }
         }
+
+        const changeToKM=async(event)=>{
+            setUnits('km'); 
+        }
+        const changeToMI=async(event)=>{
+            setUnits('mi');
+         }
+         
         
-    
+
 
     return(
         <div className="zipSearch">
@@ -38,8 +50,14 @@ const ZipDistance = ()=>{
                 <br />
                 <input type="submit" value="submit"/>
             </form>
+            <button className="buttonKM" onClick={changeToKM}>Change for KM</button>
+            <button className="butttonMI" onClick={changeToMI}>Change for MI</button>
             <h1>Distance Between The Two ZipCode:</h1>
-            <p>{cityDistance.distance} Miles</p>
+            <p>{historyArray[historyArray.length-1]}</p>
+            <div>
+                <h1>History of Distances Between ZipCodes:</h1>
+                {historyArray.map ( (zipHistory, index) => { return <p key={index}>{zipHistory} </p> })}
+            </div>
         </div>
 
     );

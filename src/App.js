@@ -5,7 +5,7 @@ import ZipDistance from './components/ZipDistance';
 
 function App() {
   return (
-    <div class = "app">
+    <div className = "app">
     <ZipDistance />
     </div>
   );
