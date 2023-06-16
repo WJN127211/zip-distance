@@ -52,6 +52,7 @@ const ZipDistance = ()=>{
             </form>
             <button className="buttonKM" onClick={changeToKM}>Change for KM</button>
             <button className="butttonMI" onClick={changeToMI}>Change for MI</button>
+            <p>Press submit again after changing units</p>
             <h1>Distance Between The Two ZipCode:</h1>
             <p>{historyArray[historyArray.length-1]}</p>
             <div>
